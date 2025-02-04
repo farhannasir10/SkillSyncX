@@ -1,101 +1,136 @@
-import Image from "next/image";
+"use client";
+import React from "react";
+import Head from "next/head";
+import { motion } from "framer-motion";
+
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const staggerChildren = {
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="bg-gray-50 text-black font-sans min-h-screen relative overflow-hidden">
+      <Head>
+        <title>SkillSyncX</title>
+        <meta name="description" content="AI-driven courses, quizzes, and career mentorship" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Navbar */}
+      <motion.header
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", stiffness: 100 }}
+        className="flex justify-between items-center p-6 bg-gray-100 shadow-md sticky top-0 z-50"
+      >
+        <motion.h1 whileHover={{ scale: 1.05 }} className="text-4xl font-extrabold text-gray-900">
+          SkillSyncX
+        </motion.h1>
+        <nav>
+          <ul className="flex space-x-8 text-gray-600 font-medium">
+            {["Courses", "Community", "Leaderboard", "Career Path"].map((item, index) => (
+              <motion.li
+                key={item}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.1 + 0.5 }}
+              >
+                <a href={`#${item.toLowerCase().replace(' ', '-')}`} className="hover:text-black transition-all px-3 py-2 rounded-lg">
+                  {item}
+                </a>
+              </motion.li>
+            ))}
+          </ul>
+        </nav>
+      </motion.header>
+
+      {/* Banner Area */}
+      <motion.section initial="hidden" animate="visible" variants={staggerChildren} className="relative text-center py-16 px-4">
+        <div className="max-w-6xl mx-auto">
+          <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-bold leading-tight text-gray-900 mb-8">
+            Transform Your Tech Career
+          </motion.h1>
+          <motion.p variants={fadeInUp} className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto mb-12">
+            Unlock your full potential with AI-driven learning paths, real-world projects, and career mentorship.
+          </motion.p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      </motion.section>
+
+      {/* Career Path Section */}
+      <section className="text-center py-12">
+        <h2 className="text-3xl font-bold text-gray-900 mb-4">Career Path</h2>
+        <p className="text-lg text-gray-600 max-w-4xl mx-auto">
+          Join to have AI detect and help you in career mentorship, from learning to industry projects to interview preparation.
+        </p>
+      </section>
+
+      {/* Main Content */}
+      <motion.section
+        initial="hidden"
+        animate="visible"
+        variants={staggerChildren}
+        className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto py-16 px-4"
+      >
+        {/* Courses Column */}
+        <motion.div
+          className="bg-white p-4 rounded-xl shadow-lg flex-1"  // Reduced padding
+          variants={fadeInUp}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Courses</h2>
+          <ul className="text-lg text-gray-600 space-y-2">
+            <li className="p-2 rounded-lg text-center">Introduction to AI</li>
+            <li className="p-2 rounded-lg text-center">Web Development Basics</li>
+            <li className="p-2 rounded-lg text-center">Advanced Machine Learning</li>
+          </ul>
+        </motion.div>
+
+        {/* Community Posts Column */}
+        <motion.div
+          className="bg-white p-4 rounded-xl shadow-lg flex-1"  // Reduced padding
+          variants={fadeInUp}
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Community</h2>
+          <ul className="text-lg text-gray-600 space-y-2">
+            <li className="p-2 rounded-lg text-center">John: Just completed my first AI project!</li>
+            <li className="p-2 rounded-lg text-center">Sarah: Looking for teammates for a hackathon.</li>
+            <li className="p-2 rounded-lg text-center">Mike: Sharing my latest web app.</li>
+          </ul>
+        </motion.div>
+      </motion.section>
+
+      {/* Leaderboard Section */}
+      <motion.section
+        initial="hidden"
+        animate="visible"
+        variants={staggerChildren}
+        className="text-center py-12"
+      >
+        <h2 className="text-3xl font-bold text-gray-900 mb-6">Leaderboard</h2>
+        <ul className="text-lg text-gray-600 space-y-2">
+          <li className="p-2 rounded-lg text-center">1. Alex Johnson</li>
+          <li className="p-2 rounded-lg text-center">2. Maria Gonzalez</li>
+          <li className="p-2 rounded-lg text-center">3. David Smith</li>
+        </ul>
+      </motion.section>
+
+      {/* Footer */}
+      <motion.footer
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        className="bg-gray-100 text-center py-8 mt-24"
+      >
+        <p className="text-gray-600">© 2025 SkillSyncX. Empowering the next generation of tech leaders.</p>
+      </motion.footer>
     </div>
   );
 }
