@@ -2,6 +2,7 @@
 import React from "react";
 import Head from "next/head";
 import { motion } from "framer-motion";
+import { Menu, X } from "lucide-react"; // Add missing imports
 
 // Animation variants
 const fadeInUp = {
@@ -18,6 +19,8 @@ const staggerChildren = {
 };
 
 export default function Home() {
+  const [menuOpen, setMenuOpen] = React.useState(false);
+
   return (
     <div className="bg-gray-50 text-black font-sans min-h-screen relative overflow-hidden">
       <Head>
@@ -42,8 +45,20 @@ export default function Home() {
         >
           SkillSyncX
         </motion.h1>
-        <nav>
-          <ul className="flex space-x-8 text-gray-600 font-medium">
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="md:hidden p-2 text-gray-600"
+        >
+          {menuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+
+        {/* Desktop & Mobile Menu */}
+        <nav
+          className={`absolute md:static bg-gray-100 md:bg-transparent top-16 left-0 w-full md:w-auto md:flex space-y-4 md:space-y-0 md:space-x-8 text-gray-600 font-medium p-6 md:p-0 shadow-md md:shadow-none transition-all ${menuOpen ? "block" : "hidden md:block"}`}
+        >
+          <ul className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8">
             {["Courses", "Community", "Leaderboard", "Career Path"].map(
               (item, index) => (
                 <motion.li
@@ -109,7 +124,7 @@ export default function Home() {
       >
         {/* Courses Column */}
         <motion.div
-          className="bg-white p-4 rounded-xl shadow-lg flex-1" // Reduced padding
+          className="bg-white p-4 rounded-xl shadow-lg flex-1"
           variants={fadeInUp}
         >
           <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">
@@ -128,7 +143,7 @@ export default function Home() {
 
         {/* Community Posts Column */}
         <motion.div
-          className="bg-white p-4 rounded-xl shadow-lg flex-1" // Reduced padding
+          className="bg-white p-4 rounded-xl shadow-lg flex-1"
           variants={fadeInUp}
         >
           <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">
